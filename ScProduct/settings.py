@@ -39,8 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'goods.app.GoodsConfig',
-    'django-filters'
+    'goods',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -77,10 +77,20 @@ WSGI_APPLICATION = 'ScProduct.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test_db',  # 数据库名字(需要先创建)
+        'USER': 'test',  # 登录用户名
+        'PASSWORD': '123456',  # 密码
+        'HOST': '',  # 数据库IP地址,留空默认为localhost
+        'PORT': '5432',  # 端口
     }
 }
 
@@ -123,3 +133,17 @@ STATICFILES_DIRS = (
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    # 'DEFAULT_THROTTLE_CLASSES': (
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle'
+    # ),
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '2/minute',
+    #     'user': '3/minute'
+    # }
+}
