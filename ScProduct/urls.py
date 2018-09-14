@@ -19,13 +19,15 @@ from django.conf.urls import url, include
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
-from goods.views import GoodsViewSet, GoodsClassViewSet, GoodsKeywordViewSet
+from goods.views import GoodsViewSet, GoodsClassViewSet, GoodsKeywordViewSet, CategoryViewset
 
 
 router = DefaultRouter()
 
 #配置URL
 router.register(r'goods', GoodsViewSet, base_name="goods")
+router.register(r'categorys', CategoryViewset, base_name="categorys")
+
 router.register(r'key', GoodsKeywordViewSet, base_name="key")
 router.register(r'class', GoodsClassViewSet, base_name="class")
 
