@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import sys
 import os
-
+import pandas as pd
 
 lld = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(lld)
@@ -12,6 +12,7 @@ django.setup()
 
 from goods.models import Goods, GoodsCategory
 
+data = pd.read_csv('data/water_classnum.csv')
 # from db_tools.data.product_data import row_data
 
 # for goods_detail in row_data:
