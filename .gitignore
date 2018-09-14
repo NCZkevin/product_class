@@ -1,2 +1,6 @@
 .DS_store
 .vscode
+ScProduct/__pycache__/
+apps/goods/__pycache__/
+apps/goods/migrations/
+db_tools/data/__pycache__/
