@@ -32,7 +32,7 @@ class GoodsCategory(models.Model):
 
 class Goods(models.Model):
     
-    gtin = models.IntegerField()
+    gtin = models.CharField(max_length=100, verbose_name="条码")
     company = models.CharField(max_length=100, verbose_name="公司名")
     spec = models.CharField(max_length=100, verbose_name="规格", blank=True)
     name = models.CharField(max_length=100, verbose_name="产品名")

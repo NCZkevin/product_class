@@ -14,7 +14,28 @@ from goods.models import Goods, GoodsCategory
 
 data = pd.read_csv('data/water_classnum.csv')
 # from db_tools.data.product_data import row_data
-
+for index,row in data.iterrows():
+    # if index > 5:
+    #     break
+    # print(len(eval(row['classes'])))
+    goods = Goods()
+    goods.gtin = row['id']
+    goods.company = row['company']
+    goods.spec = row['spec']
+    goods.name = row['name']
+    goods.brand = row['brand']
+    
+    if len(eval(row['classes'])) > 0:
+        goods.is_class = 1
+        goods.save()
+        classes = eval(row['classes'])
+        for class_name in classes:
+            category = GoodsCategory.objects.filter(name=class_name)
+            goods.classes.add(category[0])
+    else:
+        goods.save()
+    
+    print(index)
 # for goods_detail in row_data:
 #     goods = Goods()
 #     goods.name = goods_detail["name"]
