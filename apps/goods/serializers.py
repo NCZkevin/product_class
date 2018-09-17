@@ -46,3 +46,8 @@ class GoodsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Goods
         fields = "__all__"
+
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Goods
+        fields = ["company"]

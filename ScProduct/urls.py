@@ -19,18 +19,22 @@ from django.conf.urls import url, include
 from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
-from goods.views import GoodsViewSet, CategoryViewset
-
+from goods.views import GoodsViewSet, CategoryViewSet, CompanyViewSet, ClassesViewSet
+from goods.views_index import DashboardView, RuleCompanyView
 
 router = DefaultRouter()
 
 #配置URL
 router.register(r'goods', GoodsViewSet, base_name="goods")
-router.register(r'categorys', CategoryViewset, base_name="categorys")
+router.register(r'categorys', CategoryViewSet, base_name="categorys")
+router.register(r'company', CompanyViewSet, base_name="company")
+router.register(r'classes',ClassesViewSet, base_name="classes")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('docx/', include_docs_urls(title='产品分类')),
+    path('dashboard', DashboardView),
+    path('rule/company/', RuleCompanyView),
     url(r'^', include(router.urls))
 
 ]

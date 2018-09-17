@@ -8,7 +8,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 
 from .models import Goods, GoodsCategory
-from .serializers import GoodsSerializer, CategorySerializer
+from .serializers import GoodsSerializer, CategorySerializer, CompanySerializer, CategorySerializer3
 # Create your views here.
 
 class GoodsPagination(PageNumberPagination):
@@ -33,7 +33,7 @@ class GoodsViewSet(viewsets.ModelViewSet):
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('gtin', 'name', 'is_class','brand','company')
 
-class CategoryViewset(viewsets.ModelViewSet):
+class CategoryViewSet(viewsets.ModelViewSet):
     """
     list:
         商品分类列表数据
@@ -43,3 +43,11 @@ class CategoryViewset(viewsets.ModelViewSet):
     queryset = GoodsCategory.objects.filter(category_type=1)
     serializer_class = CategorySerializer
     # pagination_class = CategoryPagination
+
+class CompanyViewSet(viewsets.ModelViewSet):
+    queryset = Goods.objects.values('company').distinct('company')
+    serializer_class = CompanySerializer
+
+class ClassesViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
+    queryset = GoodsCategory.objects.filter(category_type=2)
+    serializer_class = CategorySerializer3

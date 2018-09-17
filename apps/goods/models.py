@@ -1,12 +1,12 @@
 from django.db import models
 
 # Create your models here.
-class GoodsClass(models.Model):  
-    name = models.CharField(max_length=100, verbose_name="类别名")
+# class GoodsClass(models.Model):  
+#     name = models.CharField(max_length=100, verbose_name="类别名")
 
-class GoodsKeyword(models.Model):
-    name = models.CharField(max_length=100, verbose_name='关键字')
-    classes = models.ForeignKey(GoodsClass, blank=True, null=True, on_delete=models.SET_NULL)
+# class GoodsKeyword(models.Model):
+#     name = models.CharField(max_length=100, verbose_name='关键字')
+#     classes = models.ForeignKey(GoodsClass, blank=True, null=True, on_delete=models.SET_NULL)
 
 class GoodsCategory(models.Model):
     """
