@@ -20,7 +20,7 @@ from rest_framework.documentation import include_docs_urls
 from rest_framework.routers import DefaultRouter
 
 from goods.views import GoodsViewSet, CategoryViewSet, CompanyViewSet, ClassesViewSet
-from goods.views_index import DashboardView, RuleCompanyView
+from goods.views_index import DashboardView, RuleCompanyView, FileUploadView
 
 router = DefaultRouter()
 
@@ -35,6 +35,7 @@ urlpatterns = [
     path('docx/', include_docs_urls(title='产品分类')),
     path('dashboard', DashboardView),
     path('rule/company/', RuleCompanyView),
+    path('upload/', FileUploadView.as_view()),
     url(r'^', include(router.urls))
 
 ]

@@ -5,6 +5,9 @@ import json
 from goods.models import Goods, GoodsCategory
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.parsers import MultiPartParser
+from rest_framework.views import APIView
+import pandas as pd
 
 # def get_parameter_dic(request, *args, **kwargs):
 #     # if isinstance(request, Request) == False:
@@ -37,8 +40,9 @@ def DashboardView(request):
 
 @api_view(['POST'])
 def RuleCompanyView(request):
-    params=request.data.dict()
-    goods = Goods.objects.filter(company=params['company'])
+    params=request.data
+    # print(params)
+    goods = Goods.objects.filter(company=params['comy'])
     category = GoodsCategory.objects.filter(name=params['categ'])
     num = 0
     for good in goods:
@@ -50,6 +54,46 @@ def RuleCompanyView(request):
         "num": num,
         "message": "succeess"
     })
+
+class FileUploadView(APIView):
+    parser_classes = (MultiPartParser,)
+
+    def post(self, request, format=None):
+        file_obj = request.data["file"]
+        data = pd.read_excel(file_obj)
+        try:
+            for index,row in data.iterrows():
+                goods = Goods()
+                goods.gtin = row['id']
+                goods.company = row['company']
+                goods.spec = row['spec']
+                goods.name = row['name']
+                goods.brand = row['brand']
+                
+                if len(eval(row['classes'])) > 0:
+                    goods.is_class = 1
+                    goods.save()
+                    classes = eval(row['classes'])
+                    for class_name in classes:
+                        category = GoodsCategory.objects.filter(name=class_name)
+                        goods.classes.add(category[0])
+                else:
+                    goods.save()
+        except Argument:
+            print(Argument)
+            return Response({
+                "msg": "上传文件失败，请检查文件格式是否正确"
+            })
+        else:
+            return Response(status=201,data = 
+            {   "code": 201,
+                "msg": "上传数据成功"
+            })
+        # print(data)
+        # print("here")
+
+        # return Response(status=201)
+
 # def DashboardView(self):
 #     total = Goods.objects.all().count()
 #     is_class = Goods.objects.filter(is_class=1).count()
