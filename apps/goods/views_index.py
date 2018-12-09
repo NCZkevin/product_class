@@ -50,6 +50,7 @@ def RuleCompanyView(request):
             num += 1
             good.is_class = 1
             good.classes.add(category[0])
+            good.save()
     return Response({
         "num": num,
         "message": "succeess"
