@@ -40,6 +40,7 @@ class Goods(models.Model):
     classes = models.ManyToManyField(GoodsCategory, blank=True, verbose_name="产品类目")
     is_class = models.IntegerField(default=0, verbose_name="是否分类")
     is_true = models.BooleanField(default=False, verbose_name="分类是否正确")
+    is_click = models.IntegerField(default=0, verbose_name="是否操作")
 
     class Meta:
         verbose_name = '商品'

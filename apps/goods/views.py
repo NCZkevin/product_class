@@ -28,10 +28,25 @@ class GoodsViewSet(viewsets.ModelViewSet):
     商品列表页, 分页， 搜索， 过滤， 排序
     """
     serializer_class = GoodsSerializer
-    queryset = Goods.objects.all()
+    # queryset = Goods.objects.all()
     pagination_class = GoodsPagination
     filter_backends = (DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter)
     search_fields = ('gtin', 'name', 'is_class','brand','company')
+
+    def get_queryset(self):
+        """
+        Optionally restricts the returned purchases to a given user,
+        by filtering against a `username` query parameter in the URL.
+        """
+        queryset = Goods.objects.all().order_by('id')
+        isclass = self.request.query_params.get('is_class', None)
+        isclick = self.request.query_params.get('is_click', None)
+        if isclass is not None and isclick is not None:
+            queryset = queryset.filter(is_class=isclass,is_click=isclick).order_by('id')
+        elif isclick is None and isclass is not None:
+            queryset = queryset.filter(is_class=isclass).order_by('id')
+        return queryset
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
