@@ -82,7 +82,10 @@ class GoodsSerializer(serializers.ModelSerializer):
             instance.save()
             return instance
         else:
-            instance.is_click = 1
+            if is_click == 2:
+                instance.is_click = 2
+            else:
+                instance.is_click = 1
             instance.save()
             return instance
 
